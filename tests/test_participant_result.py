@@ -33,7 +33,7 @@ UTTERANCES_3 = [
     "esto se queda aquí .",
     "está no .",
     "aquí dice .",
-    "[- eng] have you seen my duckling ?",
+    "[- eng] have you seen my patito@s ?",
     "has visto el patito ?",
     "xxx .",
 ]
@@ -68,24 +68,24 @@ def test_utterance_1_result(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(bother_user, "is_this_a_token", Mock(return_value=False))
     result = ParticipantResult(["spa", "eng"], UTTERANCES_1)
 
-    _assert_utterance_counts(result, 5, 1, 2, 2)
-    _assert_mlu_counts(result, 1.4, 1.3, 1.0)
-    _assert_type_and_token_counts(result, 4, 8, 1, 3)
+    _assert_utterance_counts(result, total=5, mixed=1, spa=2, eng=2)
+    _assert_mlu_counts(result, total=1.4, spa=1.3, eng=1.0)
+    _assert_type_and_token_counts(result, type_spa=4, token_spa=8, type_eng=1, token_eng=3)
 
 
 @pytest.mark.unit
 def test_utterance_2_result():
     result = ParticipantResult(["spa", "eng"], UTTERANCES_2)
 
-    _assert_utterance_counts(result, 10, 2, 7, 1)
-    _assert_mlu_counts(result, 3.0, 3.0, 1.0)
-    _assert_type_and_token_counts(result, 29, 34, 2, 3)
+    _assert_utterance_counts(result, total=10, mixed=2, spa=7, eng=1)
+    _assert_mlu_counts(result, total=3.0, spa=3.0, eng=1.0)
+    _assert_type_and_token_counts(result, type_spa=29, token_spa=34, type_eng=2, token_eng=3)
 
 
 @pytest.mark.unit
 def test_utterance_3_result():
     result = ParticipantResult(["spa", "eng"], UTTERANCES_3)
 
-    _assert_utterance_counts(result, 12, 0, 11, 1)
+    _assert_utterance_counts(result, total=12, mixed=1, spa=11, eng=0)
     _assert_mlu_counts(result, 2.5, 2.3, 5.0)
-    _assert_type_and_token_counts(result, 21, 30, 5, 5)
+    _assert_type_and_token_counts(result, type_spa=21, token_spa=31, type_eng=4, token_eng=4)

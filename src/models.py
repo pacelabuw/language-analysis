@@ -1,5 +1,5 @@
 from src import constants
-
+from src import bother_user
 
 class Word:
     cleaned_word: str
@@ -56,14 +56,19 @@ class Utterance:
 
         in_phrase = False
         for i in range(len(words)):
+            word_is_token = True
             next_word = words[i+1] if i < len(words) - 1 else None
             should_mlu_ignore = next_word == constants.REPEAT or next_word == constants.FALSE_START
             if not in_phrase:
                 in_phrase = words[i].startswith(constants.PHRASE_START)
+
+                if words[i].endswith(constants.PHRASE_END):
+                    # Phrase is a single word and we need to check with user
+                    word_is_token = bother_user.is_this_a_token(words[i])
             if in_phrase:
                 in_phrase = not words[i].endswith(constants.PHRASE_END)
 
-            if not self._starts_with_ignored_symbol(words[i]):
+            if not self._starts_with_ignored_symbol(words[i]) and word_is_token:
                 new_word = Word(
                     words[i],
                     active_language=self.language,
@@ -73,12 +78,20 @@ class Utterance:
                 self.is_mixed = self.is_mixed or new_word.is_code_switched
                 self.words.append(new_word)
 
+    def get_mlu_word_count(self, language: str) -> int:
+        count = 0
+        for w in self.words:
+            if w.language == language and not w.is_mlu_ignored:
+                count += 1
+        return count
+    
+    def get_tokens(self, language) -> list[str]:
+        return [w.cleaned_word for w in self.words if w.language == language]
+
 
     def _starts_with_ignored_symbol(self, word: str) -> None:
         for ignore_symbol in constants.IGNORE_STARTS_WITH:
             if word.startswith(ignore_symbol):
                 return True
         return False
-
-
         

@@ -1,6 +1,8 @@
 import pytest
+from unittest.mock import Mock
 
 from src.models import Utterance, Word
+from src import bother_user
 
 
 def _assert_word(word: Word, language: str, is_code_switched: bool, is_mlu_ignored: bool):
@@ -93,3 +95,24 @@ def test_utterance_with_ignored_words() -> None:
 
     _assert_word(utterance.words[0], "spa", False, False)
     _assert_word(utterance.words[1], "spa", False, False)
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("is_token", [True, False])
+def test_utterance_with_ignored_words(is_token: bool, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(bother_user, "is_this_a_token", Mock(return_value=is_token))
+    utterance = Utterance(
+        "[- eng] <but> [//] butterfly .", primary_language="spa", secondary_language="eng"
+    )
+    assert utterance.language == "eng"
+    assert utterance.is_mixed == False
+    assert len(utterance.words) == 2 if is_token else 1
+
+
+    if is_token:
+        assert utterance.words[0].cleaned_word == "but"
+        _assert_word(utterance.words[0], "eng", False, True)
+        _assert_word(utterance.words[1], "eng", False, False)
+    else:
+         assert utterance.words[0].cleaned_word == "butterfly"
+         _assert_word(utterance.words[0], "eng", False, False)

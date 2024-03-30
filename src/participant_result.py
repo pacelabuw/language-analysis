@@ -1,4 +1,3 @@
-from src.constants import CODE_SWITCH, PHRASE_START, PHRASE_END
 from src.models import Utterance
 
 class ParticipantResult:

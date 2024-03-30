@@ -1,4 +1,4 @@
-from src.constants import LANGUAGE_TAG, PARTICIPANTS_TAG, PUNCTUATION
+from src.constants import LANGUAGE_TAG, PARTICIPANTS_TAG
 
 class ChaData:
     file_path: str

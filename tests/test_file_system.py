@@ -43,4 +43,4 @@ def test_get_cha_files_with_files(tmp_path: Path):
     result = file_system.get_cha_files(tmp_path)
 
     assert len(result) == 3
-    assert set(cha_files) == set(result)
+    assert set([tmp_path / INPUT_DIR / f for f in cha_files]) == set(result)

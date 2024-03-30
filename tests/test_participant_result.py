@@ -87,5 +87,5 @@ def test_utterance_3_result():
     result = ParticipantResult(["spa", "eng"], UTTERANCES_3)
 
     _assert_utterance_counts(result, total=12, mixed=1, spa=11, eng=0)
-    _assert_mlu_counts(result, 2.5, 2.3, 5.0)
+    _assert_mlu_counts(result, total=2.5, spa=2.2, eng=4.0)
     _assert_type_and_token_counts(result, type_spa=21, token_spa=31, type_eng=4, token_eng=4)

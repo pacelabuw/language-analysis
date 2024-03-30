@@ -1,5 +1,7 @@
+from src.cha import ChaData
+
 def main():
-    print("hello")
+    data = ChaData("input/BWL_2002_3Bags_iPad_reading.cha")
 
 
 if __name__ == "__main__":

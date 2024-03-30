@@ -1,6 +1,6 @@
 # Data directories
 INPUT_DIR = "input"
-OUTPUT_DIR = "output"
+RESULT_FILE = "results.csv"
 
 # Meta data header tags
 LANGUAGE_TAG = "@Languages"

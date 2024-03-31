@@ -6,6 +6,12 @@ RESULT_FILE = "results.csv"
 LANGUAGE_TAG = "@Languages"
 PARTICIPANTS_TAG = "@Participants"
 
+# CSV stuff
+ID_COLUMN = ["subject_id"]
+INITIAL_COLUMNS = ["total utts", "total mlu", "mixed utts"]
+LANGUAGE_COLUMNS = ["utts", "mlu", "type", "token", "TTR"]
+NO_DATA = "-"
+
 # Things to ignore in file
 PUNCTUATION = ["?", "!", "."]
 REPEAT = "[/]"

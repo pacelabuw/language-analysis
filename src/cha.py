@@ -1,3 +1,4 @@
+from pathlib import Path
 from src.constants import LANGUAGE_TAG, PARTICIPANTS_TAG
 
 class ChaData:
@@ -55,8 +56,8 @@ class ChaData:
 
     def _get_participant_id(self) -> None:
         """Pull participant ID from file path. Expect it to be the first two pieces of filename."""
-        filename = self.file_path.split("/")[-1]
-        split_filename = filename.split("_")
+        file = Path(self.file_path)
+        split_filename = file.name.split("_")
 
         if len(split_filename) > 2:
             self.participant_id = f"{split_filename[0]}_{split_filename[1]}"

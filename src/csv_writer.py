@@ -47,7 +47,11 @@ def _add_language_columns(participant: str, columns: list[str], languages: list[
 
 
 def _extract_participant_results(data: ParticipantResult, languages: list[str]) -> list:
-    result = [data.total_utterance_count, data.total_mlu, data.mixed_utterance_count]
+    result = [
+        data.total_utterance_count, 
+        round(data.total_mlu, 2),
+        data.mixed_utterance_count,
+    ]
 
     for lang in languages:
         if lang not in data.languages:

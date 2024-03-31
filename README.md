@@ -24,4 +24,4 @@ The executable will be available in in the dist/ directory. An executable can on
 same OS it was generated with (ie Windows, Mac, Linux).
 
 ## How to cite (APA 7)
-Clayton, J. (2024). _language-analysis_ (Version 0.0.1). Pacelab. https://github.com/pacelabuw/language-analysis. 
+Clayton, J. (2024). _language-analysis_ (Version 1.0.0). Pacelab. https://github.com/pacelabuw/language-analysis. 

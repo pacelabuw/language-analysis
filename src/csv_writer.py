@@ -53,12 +53,14 @@ def _extract_participant_results(data: ParticipantResult, languages: list[str]) 
         if lang not in data.languages:
             result += [NO_DATA for _ in range(len(LANGUAGE_COLUMNS))]
         else:
+            if data.language_token_counts[lang] != 0:
+                ttr = float(data.language_type_counts[lang]) / data.language_token_counts[lang]
+            else:
+                ttr = 0
             result.append(data.language_utterance_counts[lang])
             result.append(round(data.language_mlu_counts[lang], 2))
             result.append(data.language_type_counts[lang])
             result.append(data.language_token_counts[lang])
-            result.append(
-                round(float(data.language_type_counts[lang]) / data.language_token_counts[lang], 2)
-            )
+            result.append(round(ttr, 2))
 
     return result

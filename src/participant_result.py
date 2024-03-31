@@ -35,7 +35,10 @@ class ParticipantResult:
             total_mlu_words += self._calculate_language_mlu(language)
             self._count_tokens_and_types(language)
 
-        self.total_mlu = total_mlu_words / self.total_utterance_count
+        if self.total_utterance_count != 0:
+            self.total_mlu = total_mlu_words / self.total_utterance_count
+        else:
+            self.total_mlu = 0
 
     def _count_language_utterances(self, language: str) -> None:
         """Count utterances by language, assume first language is primary."""
@@ -56,7 +59,11 @@ class ParticipantResult:
             word_count += utterance.get_mlu_word_count(language)
 
         utterance_count = self.mixed_utterance_count + self.language_utterance_counts[language]
-        self.language_mlu_counts[language] = word_count / utterance_count
+
+        if utterance_count != 0:
+            self.language_mlu_counts[language] = word_count / utterance_count
+        else:
+            self.language_mlu_counts[language] = 0
         return word_count
     
     def _count_tokens_and_types(self, language: str) -> None:
